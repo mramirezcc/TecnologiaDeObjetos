@@ -1,7 +1,7 @@
 #include "Personaje.h"
 #include <string>
 
-const std::string Personaje::color[] = {"\e[0;30m", "\e[0;37m", "\e[0;31m", "\e[0;34m"};
+const std::string Personaje::color[] = {"\e[0;34m", "\e[0;37m", "\e[0;31m", "\e[0;32m"};
 
 void Personaje::setEstado(int estado){
     this->estado = estado;
@@ -24,6 +24,14 @@ void Personaje::setObjetivo(Personaje* objetivo){
 }
 
 std::string Personaje::getIcono(){
+    /*std::string barra = "█";
+    float porcentaje = this->vida / this->vidaMax;
+    if(porcentaje < 0.75)
+        barra = "▓";
+    if(porcentaje < 0.5)
+        barra = "▒";
+    if(porcentaje < 0.25)
+        barra = "░";*/
     return "" + this->color[this->estado] + this->icono + "\e[0;37m";
 }
 
@@ -78,7 +86,7 @@ void Personaje::recibirAtaque(int ataque){
         if(this->vida <= ataque){
             this->vida = 0;
             this->estado = 0;
-            this->icono = "X";
+            this->icono = " ";
         }
         else
             this->vida -= ataque;

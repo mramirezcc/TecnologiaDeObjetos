@@ -17,6 +17,8 @@ class Celda{
         Personaje* getOcupador();
         void setOcupador(Personaje* personaje);
         void liberar();
+        void setTipo(int tipo);
+        int getTipo();
 };
 
 #endif

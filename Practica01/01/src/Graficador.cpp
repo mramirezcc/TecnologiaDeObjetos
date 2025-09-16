@@ -20,7 +20,9 @@ void Graficador::graficar(){
         res += "║";
         for(int j = 0; j < this->columnas; j++){
             res += " ";
-            if(this->tablero[i][j].getOcupador() != nullptr)
+            if(this->tablero[i][j].getTipo() == 1){
+                res += "\e[0;34mX\e[0;37m";
+            }else if(this->tablero[i][j].getOcupador() != nullptr)
                 res += this->tablero[i][j].getOcupador()->getIcono();
             else
                 res += " ";

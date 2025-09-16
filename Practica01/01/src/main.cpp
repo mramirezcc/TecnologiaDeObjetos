@@ -27,8 +27,13 @@ void llenarTabla(){
     for(int i = 0; i < filas; i++){
         for(int j = 0; j < columnas; j++){
             int aux = randomInt(1, 100);
-            if(aux >= 75)
-                tab[i][j].setOcupador(new Personaje());
+            if(aux >= 90){
+                char simboloAscii = static_cast<char>(randomInt(48, 126));
+                std::string iconoStr(1, simboloAscii);  // Convertir char a string de 1 carácter
+
+                Personaje* newPer = new Personaje(iconoStr, 1, randomInt(50, 150), randomInt(10, 50), randomInt(5, 30));
+                tab[i][j].setOcupador(newPer);
+            }
         }
     }
 }
@@ -50,8 +55,10 @@ void ciclo(){
                         per->reposar();
                         // verificacion de movimiento
                         Celda* newCel = cel;
-                        int aux = randomInt(1, 4);
-                        if(aux == 1 && i > 0)
+                        int aux = randomInt(1, 8);
+                        if(aux >= 8)
+                            newCel = cel;
+                        else if(aux == 1 && i > 0)
                             newCel = &tab[i-1][j];
                         else if(aux == 2 && i < filas - 1)
                             newCel = &tab[i+1][j];
@@ -59,7 +66,7 @@ void ciclo(){
                             newCel = &tab[i][j-1];
                         else if(aux == 4 && j < columnas - 1)
                             newCel = &tab[i][j+1];
-                        if(newCel == cel)
+                        if(newCel == cel || newCel->getTipo() == 1)
                             break;
                         //movimiento
                         if(newCel->getOcupador() == nullptr || newCel->getOcupador()->getEstado() == 0){
@@ -99,14 +106,35 @@ void ciclo(){
     }
 }
 
+void recortarZona(int contador, int numCiclos){
+    int aux = (contador / numCiclos) - 1;
+    // horizontal
+    for(int i = aux; i < filas - aux; i++){
+        tab[aux][i].setTipo(1);
+        tab[filas - aux - 1][i].setTipo(1);
+    }
+    // vertical
+    for(int i = aux; i < columnas - aux; i++){
+        tab[i][aux].setTipo(1);
+        tab[i][filas - aux - 1].setTipo(1);
+    }
+}
+
 int main(){
     inicializarTablero();
     Graficador graf = Graficador(tab, filas, columnas);
     llenarTabla();
 
-    while(true){
+    int contador = 0;
+    int numCiclos = 30;
+    while(filas > 2 && columnas > 2){
+        if(contador > 0 && contador % numCiclos == 0){
+            recortarZona(contador, numCiclos);
+        }
         ciclo();
-        usleep(250000);
+        usleep(125000);
         graf.graficar();
+        contador++;
     }
+    std::cout << "Simulacion terminada!\n";
 }
