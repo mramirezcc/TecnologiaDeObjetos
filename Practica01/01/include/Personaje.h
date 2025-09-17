@@ -21,15 +21,18 @@ class Personaje{
         Personaje* objetivo;
 
     protected:
+        void setVidaMax(int vidaMax);
+        void setDefensaMax(int defensaMax);
+
+    public:
         void setVida(int vida);
         void setDefensa(int defensa);
         void setAtaque(int ataque);
-
-    public:
         void setEstado(int estado);
         void setObjetivo(Personaje* objetivo);
-        std::string getIcono();
         void setIcono(std::string);
+
+        std::string getIcono();
         int getEstado();
         int getVida();
         int getDefensa();

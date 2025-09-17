@@ -108,3 +108,11 @@ void Personaje::reposar(){
     if(this->defensa < this->defensaMax)
         this->defensa += 1;
 }
+
+void Personaje::setVidaMax(int vidaMax){
+    this->vidaMax = vidaMax;
+}
+
+void Personaje::setDefensaMax(int defensaMax){
+    this->defensaMax = defensaMax;
+}
