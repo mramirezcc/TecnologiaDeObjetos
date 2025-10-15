@@ -20,7 +20,7 @@ int main(){
         j.ciclo();
         graf.graficar();
         contador++;
-        usleep(125000);
+        usleep(150000);
     }
     std::cout << "Simulacion terminada!\n";
 }
