@@ -1,9 +1,6 @@
-package pila_java;
-
 public interface Stack<E> {
     void push(E x);
-    E pop() throws ExceptionsIsEmpty;
-    E top() throws ExceptionsIsEmpty;
+    E pop() throws ExceptionIsEmpty;
+    E top() throws ExceptionIsEmpty;
     boolean isEmpty();
-    String toString();
 }
