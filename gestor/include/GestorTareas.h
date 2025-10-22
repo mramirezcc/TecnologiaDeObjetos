@@ -1,42 +1,44 @@
 #ifndef GESTOR_TAREAS_H
 #define GESTOR_TAREAS_H
 
-#include "Tarea.h"
+#include "TareaBase.h"
+#include "TareaSimple.h"
+#include "TareaCompuesta.h"
 #include <vector>
-#include <iostream>
+#include <memory>
 
 class GestorTareas {
     private:
-        std::vector<Tarea> tareas;
+        std::vector<std::unique_ptr<TareaBase>> tareas;
 
     public:
+        // funciones inline
         inline int cantidadTareas() const { return tareas.size(); }
         inline bool estaVacio() const { return tareas.empty(); }
 
-        void agregarTarea(const Tarea& tarea);
-        void eliminarTarea(int indice);
+        void agregarTarea(std::unique_ptr<TareaBase> tarea);
+        void agregarTarea(TareaBase* tarea);
+
+        template<typename T>
+        void agregarTareaDerivada(std::unique_ptr<T> tarea);
+
         void mostrarTareas() const;
 
         // templates
         template<typename Func>
-        std::vector<Tarea> filtrarTareas(Func criterio) const {
-            std::vector<Tarea> resultado;
-            for (const auto& tarea : tareas) {
-                if (criterio(tarea)) {
-                    resultado.push_back(tarea);
-                }
-            }
-            return resultado;
-        }
-
-        template<typename Func>
         void forEachTarea(Func accion) {
             for (auto& tarea : tareas) {
-                accion(tarea);
+                accion(*tarea);
             }
         }
 
-        friend void fusionarGestores(const GestorTareas& g1, const GestorTareas& g2, GestorTareas& resultado);
+        // contravarianza
+        template<typename Func>
+        void procesarTodasTareas(Func procesador) {
+            for (auto& tarea : tareas) {
+                procesador(*tarea);
+            }
+        }
 };
 
 #endif

@@ -1,69 +1,63 @@
 #include <iostream>
 #include "GestorTareas.h"
-#include "Tarea.h"
 
 using namespace std;
 
 int main() {
+    cout << "=== GESTOR DE TAREAS ===" << endl;
+    
     GestorTareas gestor;
     
-    // Crear tareas
-    Tarea t1("Estudiar C++", 2);
-    Tarea t2("Hacer ejercicio", 1);
-    Tarea t3("Comprar comida", 3);
+    // covarianza
+    cout << "\n1. COVARIANZA:" << endl;
     
-    gestor.agregarTarea(t1);
-    gestor.agregarTarea(t2);
-    gestor.agregarTarea(t3);
+    TareaSimple tareaSimple("Tarea Simple", 2);
+    TareaCompuesta tareaCompuesta("Tarea Compuesta", 1);
     
+    // clonacion de tareas
+    TareaSimple* clonSimple = tareaSimple.clonar();      // TareaSimple*
+    TareaCompuesta* clonCompuesta = tareaCompuesta.clonar(); // TareaCompuesta*
+    
+    cout << "Clon simple: ";
+    clonSimple->mostrarInfo();
+    
+    cout << "Clon compuesta: ";
+    clonCompuesta->mostrarInfo();
+    
+    // agregar al gestor
+    gestor.agregarTarea(clonSimple);
+    gestor.agregarTarea(clonCompuesta);
+    
+    // contravarianza
+    cout << "\n2. CONTRAVARIANZA:" << endl;
+    
+    TareaSimple subtarea("Subtarea", 2);
+    tareaCompuesta.agregarSubtarea(subtarea); // acepta TareaSimple donde espera TareaBase&
+    
+    // contravarianza con lambda
+    gestor.procesarTodasTareas([](TareaBase& tarea) {
+        cout << "Procesando: " << tarea.getDescripcion() << endl;
+    });
+    
+    // lambda y sobrecarga
+    cout << "\n3. LAMBDA Y SOBRECARGA:" << endl;
+    
+    gestor.forEachTarea([](TareaBase& tarea) {
+        tarea.marcarCompletada();
+    });
+    
+    TareaSimple t1("Tarea A", 1);
+    TareaSimple t2("Tarea B", 2);
+    TareaSimple t3 = t1 + t2;
+    
+    cout << "Tarea combinada: ";
+    t3.mostrarInfo();
+    
+    // resultados finales
+    cout << "\n4. ESTADO FINAL:" << endl;
     gestor.mostrarTareas();
     
-    // Filtrar tareas de alta prioridad
-    auto filtroAltaPrioridad = [](const Tarea& t) { 
-        return t.getPrioridad() >= 2; 
-    };
-    
-    cout << "\n=== TAREAS DE ALTA PRIORIDAD ===" << endl;
-    auto tareasAltas = gestor.filtrarTareas(filtroAltaPrioridad);
-    for (const auto& tarea : tareasAltas) {
-        cout << "- " << tarea.getDescripcion() << " [Pri: " << tarea.getPrioridad() << "]" << endl;
-    }
-    
-    // Modificar todas las tareas
-    auto agregarPrefijo = [](Tarea& t) {
-        t.modificarDescripcion([](const string& desc) {
-            return "- " + desc;
-        });
-    };
-    
-    cout << "\n=== MODIFICACION DE TAREAS ===" << endl;
-    gestor.forEachTarea(agregarPrefijo);
-    gestor.mostrarTareas();
-    
-    // Filtrar tareas pendientes
-    cout << "\n=== TAREAS PENDIENTES ===" << endl;
-    auto tareasPendientes = gestor.filtrarTareas(
-        [](const Tarea& t) { return !t.estaCompletada(); }
-    );
-    
-    for (const auto& tarea : tareasPendientes) {
-        cout << "- " << tarea.getDescripcion() << endl;
-    }
-    
-    // SObrecarga de operador +
-    cout << "\n=== COMBINACION TAREAS ===" << endl;
-    Tarea t5("Limpiar casa", 2);
-    Tarea t6("Lavar ropa", 1);
-    Tarea combinada = t5 + t6;
-    cout << "Tarea combinada: " << combinada.getDescripcion() << endl;
-    
-    // Probar función friend
-    cout << "\n=== INTERCAMBIANDO TAREAS ===" << endl;
-    Tarea ta("Comer", 1);
-    Tarea tb("Dormir", 3);
-    cout << "Antes: " << ta.getDescripcion() << " y " << tb.getDescripcion() << endl;
-    intercambiarTareas(ta, tb);
-    cout << "Despues: " << ta.getDescripcion() << " y " << tb.getDescripcion() << endl;
+    cout << "\n=== FIN DEL GESTOR ===" << endl;
     
     return 0;
 }
