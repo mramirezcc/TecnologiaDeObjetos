@@ -14,7 +14,7 @@ int main() {
     auto hachaElectrica = std::make_unique<Hacha>("Hacha Eléctrica", 30, "Eléctrico", 0.25f);
     
     // Crear jugador y enemigos
-    Jugador heroe("Héroe", 100, std::move(espadaFuego));
+    Jugador heroe("Goblin Slayer", 100, std::move(espadaFuego));
     Enemigo goblin("Goblin", 50, std::make_unique<Arco>("Arco Simple", 15), "Goblin", 50);
     Enemigo orco("Orco Guerrero", 80, std::make_unique<Hacha>("Hacha de Batalla", 28), "Orco", 100);
     

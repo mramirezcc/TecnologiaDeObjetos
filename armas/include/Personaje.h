@@ -11,12 +11,12 @@ class Personaje {
         int salud;
         int saludMaxima;
         std::unique_ptr<Arma> arma;
-    
+
     public:
         Personaje(const std::string& nombre, int salud, std::unique_ptr<Arma> arma);
         virtual ~Personaje() = default;
-        
-        virtual void recibirDanio(int danio);
+
+        virtual void recibirdmg(int dmg);
         virtual int atacar() const;
         bool estaVivo() const;
         std::string getNombre() const;

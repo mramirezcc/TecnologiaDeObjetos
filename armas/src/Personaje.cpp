@@ -3,13 +3,13 @@
 Personaje::Personaje(const std::string& nombre, int salud, std::unique_ptr<Arma> arma)
     : nombre(nombre), salud(salud), saludMaxima(salud), arma(std::move(arma)) {}
 
-void Personaje::recibirDanio(int danio) {
-    salud -= danio;
+void Personaje::recibirdmg(int dmg) {
+    salud -= dmg;
     if (salud < 0) salud = 0;
 }
 
 int Personaje::atacar() const {
-    return arma ? arma->calcularDanio() : 0;
+    return arma ? arma->calcularDmg() : 0;
 }
 
 bool Personaje::estaVivo() const {

@@ -6,18 +6,18 @@
 class Arma {
     protected:
         std::string nombre;
-        int danioBase;
-        std::string elemento;
-        float probabilidadCritico;
-    
+        int dmgBase;
+        std::string elem;
+        float probCrit;
+
     public:
-        Arma(const std::string& nombre, int danioBase, const std::string& elemento = "Normal", float probCritico = 0.1f);
+        Arma(const std::string& nombre, int dmgBase, const std::string& elem = "Normal", float probCrit = 0.1f);
         virtual ~Arma() = default;
-        
-        virtual int calcularDanio() const;
+
+        virtual int calcularDmg() const;
         virtual std::string getTipo() const = 0;
         std::string getNombre() const;
-        std::string getElemento() const;
+        std::string getElem() const;
         bool esCritico() const;
 };
 

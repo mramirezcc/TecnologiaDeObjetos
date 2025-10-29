@@ -5,7 +5,7 @@
 
 class Arco : public Arma {
     public:
-        Arco(const std::string& nombre, int danioBase, const std::string& elemento = "Normal", float probCritico = 0.15f);
+        Arco(const std::string& nombre, int dmgBase, const std::string& elem = "Normal", float probCritico = 0.15f);
         std::string getTipo() const override;
 };
 

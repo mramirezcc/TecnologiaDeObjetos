@@ -2,16 +2,16 @@
 #include <iostream>
 
 void SistemaCombate::iniciarCombate(Jugador& jugador, Enemigo& enemigo) {
-    std::cout << "=== COMBATE INICIADO ===" << std::endl;
+    std::cout << "\n=== COMBATE INICIADO ===" << std::endl;
     std::cout << jugador.getNombre() << " (Nivel " << jugador.getNivel() << ") vs " 
               << enemigo.getNombre() << " (" << enemigo.getTipoEnemigo() << ")" << std::endl;
     
     while (jugador.estaVivo() && enemigo.estaVivo()) {
         // Turno del jugador
-        int danioJugador = jugador.atacar();
-        enemigo.recibirDanio(danioJugador);
-        std::cout << jugador.getNombre() << " ataca con " << jugador.getTipoArma() 
-                  << " y causa " << danioJugador << " de daño!" << std::endl;
+        int dmgJugador = jugador.atacar();
+        enemigo.recibirdmg(dmgJugador);
+        std::cout << "> " << jugador.getNombre() << " ataca con " << jugador.getTipoArma() 
+                  << " y causa " << dmgJugador << " de daño" << std::endl;
         
         if (!enemigo.estaVivo()) {
             std::cout << enemigo.getNombre() << " ha sido derrotado!" << std::endl;
@@ -20,10 +20,10 @@ void SistemaCombate::iniciarCombate(Jugador& jugador, Enemigo& enemigo) {
         }
         
         // Turno del enemigo
-        int danioEnemigo = enemigo.atacar();
-        jugador.recibirDanio(danioEnemigo);
-        std::cout << enemigo.getNombre() << " ataca con " << enemigo.getTipoArma() 
-                  << " y causa " << danioEnemigo << " de daño!" << std::endl;
+        int dmgEnemigo = enemigo.atacar();
+        jugador.recibirdmg(dmgEnemigo);
+        std::cout << "> " << enemigo.getNombre() << " ataca con " << enemigo.getTipoArma() 
+                  << " y causa " << dmgEnemigo << " de daño!" << std::endl;
         
         if (!jugador.estaVivo()) {
             std::cout << jugador.getNombre() << " ha sido derrotado!" << std::endl;

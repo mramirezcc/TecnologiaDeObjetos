@@ -5,9 +5,10 @@
 
 class Hacha : public Arma {
     public:
-        Hacha(const std::string& nombre, int danioBase, const std::string& elemento = "Normal", float probCritico = 0.2f);
+        Hacha(const std::string& nombre, int dmgBase, const std::string& elem = "Normal", float probCritico = 0.2f);
         std::string getTipo() const override;
-        int calcularDanio() const override; // Hacha tiene cálculo de daño diferente
+        // Hacha calcula diferente
+        int calcularDmg() const override;
 };
 
 #endif

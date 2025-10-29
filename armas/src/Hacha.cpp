@@ -1,29 +1,28 @@
 #include "Hacha.h"
 #include <random>
 
-Hacha::Hacha(const std::string& nombre, int danioBase, const std::string& elemento, float probCritico)
-    : Arma(nombre, danioBase, elemento, probCritico) {}
+Hacha::Hacha(const std::string& nombre, int dmgBase, const std::string& elem, float probCritico)
+    : Arma(nombre, dmgBase, elem, probCritico) {}
 
 std::string Hacha::getTipo() const {
     return "Hacha";
 }
 
-int Hacha::calcularDanio() const {
+int Hacha::calcularDmg() const {
     // Hacha tiene posibilidad de daño adicional por romper defensas
     std::random_device rd;
     std::mt19937 gen(rd());
     std::uniform_real_distribution<> dis(0.0, 1.0);
     
-    int danio = danioBase;
+    int dmg = dmgBase;
     
     if (esCritico()) {
-        danio *= 3; // Hacha tiene crítico más fuerte
+        dmg *= 3;
     }
     
-    // 30% de probabilidad de daño extra
     if (dis(gen) < 0.3f) {
-        danio += danioBase * 0.5; // 50% de daño extra
+        dmg += dmgBase * 0.5;
     }
     
-    return danio;
+    return dmg;
 }
