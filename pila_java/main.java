@@ -82,7 +82,7 @@ public class main {
             tablero[fila][col] = ' ';
             System.out.println("Se deshizo el movimiento en (" + fila + "," + col + ")");
             return true;
-        } catch (ExceptionIsEmpty e) {
+        } catch (Exception e) {
             System.out.println("Sin movimientos para deshacer");
             return false;
         }

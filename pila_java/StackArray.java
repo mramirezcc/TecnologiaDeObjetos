@@ -1,4 +1,4 @@
-public class StackArray<E> implements Stack<E> {
+public class StackArray<E> {
     private E[] data;
     private int top;
 
@@ -20,9 +20,9 @@ public class StackArray<E> implements Stack<E> {
         }
     }
 
-    public E pop() throws ExceptionIsEmpty{
+    public E pop() throws Exception {
         if(this.isEmpty()){
-            throw new ExceptionIsEmpty("No se puede hacer pop");
+            throw new Exception("No se puede hacer pop: Pila vacía");
         }
         E aux = this.data[top];
         this.data[top] = null;
@@ -30,15 +30,15 @@ public class StackArray<E> implements Stack<E> {
         return aux;
     }
 
-    public E top() throws ExceptionIsEmpty{
+    public E top() throws Exception {
         if(this.isEmpty()){
-            throw new ExceptionIsEmpty("La pila no tiene elementos");
+            throw new Exception("La pila no tiene elementos");
         }
         return this.data[top];
     }
 
     public boolean isEmpty(){
-        return this.data[0] == null;
+        return this.top == -1;
     }
 
     public boolean isFull(){
@@ -46,11 +46,28 @@ public class StackArray<E> implements Stack<E> {
     }
 
     public String toString(){
-        String str = "Elementos: ";
+        StringBuilder str = new StringBuilder("Elementos: ");
         for(E elem : this.data){
             if(elem != null)
-                str += elem.toString() + ", ";
+                str.append(elem.toString()).append(", ");
         }
-        return str;
+        return str.toString();
+    }
+
+    // Método main para pruebas rápidas (opcional)
+    public static void main(String[] args) {
+        try {
+            StackArray<Integer> stack = new StackArray<>(3);
+            stack.push(10);
+            stack.push(20);
+            System.out.println(stack);
+            System.out.println("Top: " + stack.top());
+            System.out.println("Pop: " + stack.pop());
+            System.out.println(stack);
+            stack.pop();
+            stack.pop(); // Esto lanzará excepción
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
     }
 }
