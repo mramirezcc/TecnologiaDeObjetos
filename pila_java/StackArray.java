@@ -32,7 +32,7 @@ public class StackArray<E> {
 
     public E top() throws Exception {
         if(this.isEmpty()){
-            throw new Exception("La pila no tiene elementos");
+            throw new Exception("La pila no tiene elems");
         }
         return this.data[top];
     }
@@ -46,7 +46,7 @@ public class StackArray<E> {
     }
 
     public String toString(){
-        StringBuilder str = new StringBuilder("Elementos: ");
+        StringBuilder str = new StringBuilder("elems: ");
         for(E elem : this.data){
             if(elem != null)
                 str.append(elem.toString()).append(", ");
